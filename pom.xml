@@ -76,6 +76,13 @@
 		<system>CircleCI</system>
 		<url>https://circleci.com/gh/bordertech/java-common/</url>
 	</ciManagement>
+	
+	<!-- developers is a required section for Maven Central -->
+	<developers>
+		<developer>
+			<url>https://github.com/BorderTech</url>
+		</developer>
+	</developers>
 
 	<distributionManagement>
 		<snapshotRepository>
@@ -135,7 +142,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.6</version>
 					<configuration>
 						<archive>
 							<manifestEntries>
