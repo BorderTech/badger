@@ -6,7 +6,7 @@
 
 	<groupId>com.github.bordertech.common</groupId>
 	<artifactId>bordertech-parent</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 
 
 
@@ -58,7 +58,7 @@
 		<url>https://github.com/bordertech/java-common</url>
 		<connection>scm:git:https://github.com/bordertech/java-common.git</connection>
 		<developerConnection>scm:git:https://github.com/bordertech/java-common.git</developerConnection>
-		<tag>bordertech-parent-1.0.0</tag>
+		<tag>java-common-1.0.0</tag>
 	</scm>
 
 	<!--
