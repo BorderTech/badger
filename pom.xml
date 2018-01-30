@@ -6,15 +6,21 @@
 
 	<groupId>com.github.bordertech.common</groupId>
 	<artifactId>java-common</artifactId>
-	<version>1.0.0-SNAPSHOT</version><!-- Never really needs to change, aggregate POM is not released -->
+	<version>1.0.0-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 
 	<description>
 		This is an "aggregator POM" and is not used in Maven inheritance.
-		It is not released and is simply a build helper.
-		This is an acceptable practice in Maven, use your favorite search engine to look it up.
+		It is simply a build helper.
 	</description>
+
+	<scm>
+		<url>https://github.com/bordertech/java-common</url>
+		<connection>scm:git:https://github.com/bordertech/java-common.git</connection>
+		<developerConnection>scm:git:https://github.com/bordertech/java-common.git</developerConnection>
+		<tag>java-common-1.0.0</tag>
+	</scm>
 
 	<modules>
 		<module>bordertech-parent</module>
