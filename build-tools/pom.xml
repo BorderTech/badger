@@ -7,7 +7,6 @@
 		<groupId>com.github.bordertech.common</groupId>
 		<artifactId>bordertech-parent</artifactId>
 		<version>1.0.3-SNAPSHOT</version>
-		<relativePath>../bordertech-parent</relativePath>
 	</parent>
 
 	<artifactId>build-tools</artifactId>
