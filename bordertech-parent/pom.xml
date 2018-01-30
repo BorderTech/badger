@@ -1,0 +1,319 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>bordertech-parent</name>
+
+	<groupId>com.github.bordertech.common</groupId>
+	<artifactId>bordertech-parent</artifactId>
+	<version>1.0.3-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<properties>
+		<surefireArgLine />
+		<surefire.version>2.20</surefire.version>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<stagingBaseUrl>https://oss.sonatype.org/</stagingBaseUrl>
+		<stagingUrl>${stagingBaseUrl}service/local/staging/deploy/maven2/</stagingUrl>
+		<snapshotUrl>${stagingBaseUrl}content/repositories/snapshots</snapshotUrl>
+		<stagingId>ossrh</stagingId>
+	</properties>
+
+	<!--
+		Descendants MAY override the licence.
+	-->
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://github.com/bordertech/java-common/blob/master/LICENSE</url>
+			<distribution>manual</distribution>
+			<comments>MIT License</comments>
+		</license>
+	</licenses>
+
+	<!--
+		description is a required section for Maven Central.
+		Descendants SHOULD override the description.
+	-->
+	<description>
+		Common parent for BorderTech Maven projects.
+		This will help prevent BorderTech projects from bringing in multiple versions of the same dependencies.
+		It also helps configure projects which deploy artifacts to Maven Central.
+	</description>
+
+	<!--
+		url is a required section for Maven Central.
+		Descendants SHOULD override the url.
+	-->
+	<url>https://github.com/bordertech/java-common/</url>
+
+	<!--
+		Descendants outside the java-common project SHOULD override this section.
+	-->
+	<scm>
+		<url>https://github.com/bordertech/java-common</url>
+		<connection>scm:git:https://github.com/bordertech/java-common.git</connection>
+		<developerConnection>scm:git:https://github.com/bordertech/java-common.git</developerConnection>
+		<tag>java-common-1.0.0</tag>
+	</scm>
+
+	<!--
+		Descendants outside the java-common project SHOULD override this section.
+	-->
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/bordertech/java-common/issues</url>
+	</issueManagement>
+
+	<!--
+		Descendants outside the java-common project SHOULD override this section.
+	-->
+	<ciManagement>
+		<system>CircleCI</system>
+		<url>https://circleci.com/gh/bordertech/java-common/</url>
+	</ciManagement>
+
+	<!-- developers is a required section for Maven Central -->
+	<developers>
+		<developer>
+			<url>https://github.com/BorderTech</url>
+		</developer>
+	</developers>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>${stagingId}</id>
+			<url>${snapshotUrl}</url>
+		</snapshotRepository>
+		<repository>
+			<id>${stagingId}</id>
+			<url>${stagingUrl}</url>
+		</repository>
+		<!--
+		<site>
+			<id>sites</id>
+			<name>sites</name>
+			<url>${sitesUrl}</url>
+		</site>
+		-->
+	</distributionManagement>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.4</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Build jars. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifestEntries>
+								<Built-By /><!-- blank build user in manifest file -->
+							</manifestEntries>
+						</archive>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>test-jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifestEntries>
+								<Built-By /><!-- blank build user in manifest file -->
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+
+				<!-- Compile the java source. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.3</version>
+				</plugin>
+
+
+				<!-- Generate the site. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.4</version>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.maven.doxia</groupId>
+							<artifactId>doxia-module-markdown</artifactId>
+							<version>1.6</version>
+						</dependency>
+					</dependencies>
+					<executions>
+						<execution>
+							<id>attach-descriptor</id>
+							<goals>
+								<goal>attach-descriptor</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- Handle release. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.3</version>
+					<configuration>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<useReleaseProfile>false</useReleaseProfile>
+						<!-- need this for gpg plugin to work correctly -->
+						<mavenExecutorId>forked-path</mavenExecutorId>
+						<releaseProfiles>release</releaseProfiles>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.4.1</version>
+				<executions>
+					<execution>
+						<id>enforce-require-property-diverges</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requirePropertyDiverges>
+									<property>project.description</property>
+								</requirePropertyDiverges>
+							</rules>
+							<fail>true</fail>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>extra-enforcer-rules</artifactId>
+						<version>1.0-beta-6</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<!--
+			The build cannot release to maven central without configuring several secrets in settings.xml
+			Read here: https://github.com/BorderTech/wcomponents/wiki/Releasing
+			-->
+			<id>release</id>
+			<build>
+				<!-- Could move sources generation here, javadoc too, site? -->
+				<plugins>
+					<!-- Create jar of the source files. -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.4</version>
+						<configuration>
+							<archive>
+								<manifestEntries>
+									<Built-By /><!-- blank build user in manifest file -->
+								</manifestEntries>
+							</archive>
+							<includes>
+								<include>**/*.java</include>
+							</includes>
+						</configuration>
+						<executions>
+							<execution>
+								<id>sources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>test-sources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>test-jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.10.3</version>
+						<configuration>
+							<archive>
+								<manifestEntries>
+									<Built-By /><!-- blank build user in manifest file -->
+								</manifestEntries>
+							</archive>
+							<charset>UTF-8</charset>
+							<encoding>UTF-8</encoding>
+							<docencoding>UTF-8</docencoding>
+							<breakiterator>true</breakiterator>
+							<version>true</version>
+							<keywords>true</keywords>
+						</configuration>
+						<executions>
+							<execution>
+								<!-- A release to Maven Central MUST include javadoc Jars - even if they are dummy jars -->
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
