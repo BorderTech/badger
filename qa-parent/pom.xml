@@ -40,6 +40,13 @@
 					<linkXRef>false</linkXRef>
 					<includeTestSourceDirectory>false</includeTestSourceDirectory>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.github.bordertech.common</groupId>
+						<artifactId>build-tools</artifactId>
+						<version>1.0.3-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
 						<id>checkStyle</id>
@@ -84,6 +91,13 @@
 					<threshold>Medium</threshold>
 					<excludeFilterFile>bordertech/findbugs-exclude-filter.xml</excludeFilterFile>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.github.bordertech.common</groupId>
+						<artifactId>build-tools</artifactId>
+						<version>1.0.3-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
 						<id>checkFindbugs</id>
@@ -95,13 +109,5 @@
 				</executions>
 			</plugin>
 		</plugins>
-
-		<extensions>
-			<extension>
-				<groupId>com.github.bordertech.common</groupId>
-				<artifactId>build-tools</artifactId>
-				<version>1.0.3-SNAPSHOT</version>
-			</extension>
-		</extensions>
 	</build>
 </project>
