@@ -29,7 +29,8 @@ public class BadgerTest {
 		System.out.println("textExecuteCheckstylePerfect");
 		File[] files = new File[]{ getInputFile("/checkstyle-result-zero.xml") };
 		String[] expectedResults = new String[] { "E:0 W:0 I:0" };
-		executeTestHelper(files, expectedResults);
+		boolean passed = executeTestHelper(files, expectedResults);
+		Assert.assertTrue(passed);
 	}
 
 	@Test
@@ -37,7 +38,8 @@ public class BadgerTest {
 		System.out.println("textExecutePMDPerfect");
 		File[] files = new File[]{ getInputFile("/pmd-result-zero.xml") };
 		String[] expectedResults = new String[] { "B:0 C:0 M:0 m:0 I:0" };
-		executeTestHelper(files, expectedResults);
+		boolean passed = executeTestHelper(files, expectedResults);
+		Assert.assertTrue(passed);
 	}
 
 	@Test
@@ -45,7 +47,8 @@ public class BadgerTest {
 		System.out.println("textExecuteMultiple");
 		File[] files = new File[]{ getInputFile("/checkstyle-result-zero.xml"), getInputFile("/pmd-result-zero.xml") };
 		String[] expectedResults = new String[] { "E:0 W:0 I:0", "B:0 C:0 M:0 m:0 I:0" };
-		executeTestHelper(files, expectedResults);
+		boolean passed = executeTestHelper(files, expectedResults);
+		Assert.assertTrue(passed);
 	}
 
 	@Test
@@ -53,7 +56,8 @@ public class BadgerTest {
 		System.out.println("textExecuteCheckstyleWithIssues");
 		File[] files = new File[]{ getInputFile("/checkstyle-result-issues.xml") };
 		String[] expectedResults = new String[] { "E:1 W:1 I:0" };
-		executeTestHelper(files, expectedResults);
+		boolean passed = executeTestHelper(files, expectedResults);
+		Assert.assertTrue(passed);
 	}
 
 	@Test
@@ -61,7 +65,8 @@ public class BadgerTest {
 		System.out.println("textExecutePMDWithIssues");
 		File[] files = new File[]{ getInputFile("/pmd-result-issues.xml") };
 		String[] expectedResults = new String[] { "B:0 C:1 M:0 m:0 I:0" };
-		executeTestHelper(files, expectedResults);
+		boolean passed = executeTestHelper(files, expectedResults);
+		Assert.assertTrue(passed);
 	}
 
 	@Test
@@ -69,7 +74,8 @@ public class BadgerTest {
 		System.out.println("textExecuteFindBugsWithIssues");
 		File[] files = new File[]{ getInputFile("/findbugsXml-issues.xml") };
 		String[] expectedResults = new String[] { "H:2 M:2 L:0" };
-		executeTestHelper(files, expectedResults);
+		boolean passed = executeTestHelper(files, expectedResults);
+		Assert.assertTrue(passed);
 	}
 
 	/**
@@ -79,8 +85,10 @@ public class BadgerTest {
 	 *
 	 * @param reports An array of valid input files.
 	 * @param expectedResults A corresponding array of content to search for within the output files.
+	 * @return true if the tests passed (really just to keep codacy happy).
 	 */
-	private void executeTestHelper(final File[] reports, final String[] expectedResults) {
+	private boolean executeTestHelper(final File[] reports, final String[] expectedResults) {
+		boolean result = true;
 		File outputDir = getOutputDir();
 		Badger badger = new Badger();
 		badger.setOutputDir(outputDir);
@@ -92,9 +100,13 @@ public class BadgerTest {
 			File file = reports[i];
 			String expected = expectedResults[i];
 			File svg = badger.getOutputFile(file);
-			Assert.assertTrue(svg.exists());
-			Assert.assertTrue(contains(svg, expected));
+			boolean exists = svg.exists();
+			boolean valid = contains(svg, expected);
+			Assert.assertTrue("File should exist " + svg.getAbsolutePath(), exists);
+			Assert.assertTrue("File should contain " + expected, valid);
+			result = result && exists && valid;
 		}
+		return result;
 	}
 
 	/**
