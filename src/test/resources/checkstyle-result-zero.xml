@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.11.2">
+<file name="/home/rick/projects/badges/src/main/java/com/github/bordertech/buildtools/Badges.java">
+</file>
+<file name="/home/rick/projects/badges/src/main/java/com/github/bordertech/buildtools/plugins/BadgesMojo.java">
+</file>
+<file name="/home/rick/projects/badges/src/main/java/com/github/bordertech/buildtools/plugins/BadgesException.java">
+</file>
+<file name="/home/rick/projects/badges/src/main/java/com/github/bordertech/buildtools/plugins/package-info.java">
+</file>
+<file name="/home/rick/projects/badges/src/main/java/com/github/bordertech/buildtools/package-info.java">
+</file>
+</checkstyle>
