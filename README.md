@@ -18,6 +18,12 @@ These are the badges for the Badger project itself:
 ![Checkstyle](docs/badges/checkstyle-result.svg)
 ![Findbugs](docs/badges/findbugsXml.svg)
 
+Here are some examples of badges where warnings are reported:
+
+![PMD badge](docs/badges/pmd-warn.svg)
+![Checkstyle](docs/badges/checkstyle-result-warn.svg)
+![Findbugs](docs/badges/findbugsXml-warn.svg)
+
 Here are some examples of badges where issues are detected:
 
 ![PMD badge](docs/badges/pmd-issues.svg)
