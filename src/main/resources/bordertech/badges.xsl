@@ -3,16 +3,8 @@
 
 	<xsl:output method="xml" indent="no" omit-xml-declaration="yes" />
 
-	<xsl:param name="COLOR.ERROR" select="'#E05D44'"/>
-	<xsl:param name="COLOR.OK" select="'#4C1'"/>
-	<xsl:param name="COLOR.WARN" select="'#DFB317'"/>
-	
-	<xsl:param name="COVERAGE_ERROR" select="50"/>
-	<xsl:param name="COVERAGE_WARN" select="80"/>
-
-	<xsl:variable name="COLOUR.ERROR" select="$COLOR.ERROR"/>
-	<xsl:variable name="COLOUR.OK" select="$COLOR.OK"/>
-	<xsl:variable name="COLOUR.WARN" select="$COLOR.WARN"/>
+	<xsl:variable name="COLOUR.ERROR" select="'#E05D44'"/>
+	<xsl:variable name="COLOUR.OK" select="'#4C1'"/>
 
 	<!-- This template drives the output -->
 	<xsl:template match="/">
@@ -37,9 +29,6 @@
 		<xsl:choose>
 			<xsl:when test="$blocker &gt; 0 or $critical &gt; 0">
 				<xsl:value-of select="$COLOUR.ERROR" />
-			</xsl:when>
-			<xsl:when test="$major &gt; 0 or $minor &gt; 0">
-				<xsl:value-of select="$COLOUR.WARN" />
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$COLOUR.OK" />
@@ -72,9 +61,6 @@
 			<xsl:when test="$error &gt; 0">
 				<xsl:value-of select="$COLOUR.ERROR" />
 			</xsl:when>
-			<xsl:when test="$warning &gt; 0">
-				<xsl:value-of select="$COLOUR.WARN" />
-			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$COLOUR.OK" />
 			</xsl:otherwise>
@@ -104,9 +90,6 @@
 		<xsl:choose>
 			<xsl:when test="$high &gt; 0">
 				<xsl:value-of select="$COLOUR.ERROR" />
-			</xsl:when>
-			<xsl:when test="$medium &gt; 0">
-				<xsl:value-of select="$COLOUR.WARN" />
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$COLOUR.OK" />
@@ -160,11 +143,8 @@
 		<!-- Check Status Colour -->
 		<xsl:variable name="colour">
 			<xsl:choose>
-				<xsl:when test="$inst_per &lt; $COVERAGE_ERROR">
+				<xsl:when test="$inst_per &lt; 80">
 					<xsl:value-of select="$COLOUR.ERROR" />
-				</xsl:when>
-				<xsl:when test="$inst_per &lt; $COVERAGE_WARN">
-					<xsl:value-of select="$COLOUR.WARN" />
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="$COLOUR.OK" />
