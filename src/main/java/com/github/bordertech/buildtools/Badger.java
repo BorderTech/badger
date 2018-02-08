@@ -95,7 +95,11 @@ public class Badger {
 	 */
 	public File getOutputFile(final File inputXml) {
 		String name = inputXml.getName();
-		name = name.replaceAll("(?i)\\.xml$", ".svg");
+		if (name.endsWith(".xml")) {
+			name = name.replaceAll("(?i)\\.xml$", ".svg");
+		} else {
+			name = name + ".svg";
+		}
 		File outputFile = new File(outputDir, name);
 		return outputFile;
 	}
