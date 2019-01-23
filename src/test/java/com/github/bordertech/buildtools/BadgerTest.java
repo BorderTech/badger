@@ -186,9 +186,11 @@ public class BadgerTest {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				if (line.contains(search)) {
+					scanner.close();
 					return true;
 				}
 			}
+			scanner.close();
 		} catch (FileNotFoundException ex) {
 			Assert.fail(ex.getMessage());
 		}
